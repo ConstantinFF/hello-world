@@ -1,0 +1,16 @@
+services:
+  node:
+    image: node:alpine
+    volumes:
+      - ${PROJECT_PATH:-$PWD}:/app
+      - /app/node_modules
+      - ${HOME}/.npm:/root/.npm
+    working_dir: /app
+    entrypoint: [ "/bin/sh", "-c" ]
+    command:
+      - |
+        chown -R node /app/node_modules
+        npm install
+        npm start
+    ports:
+      - 3000:3000
